@@ -8,7 +8,7 @@ public class Game{
     }
 
     public static void play(){ //simulate card playing
-    
+        
     }
         
         
