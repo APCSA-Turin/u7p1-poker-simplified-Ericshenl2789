@@ -52,7 +52,8 @@ public class Player{
         return result; 
     }
     public static void main(String[] args) {
-        System.out.println(new Player().findRankingFrequency());
+        Player a = new Player();
+        System.out.println(a.findRankingFrequency());
     }
     public ArrayList<Integer> findSuitFrequency(){
         return new ArrayList<>(); 
