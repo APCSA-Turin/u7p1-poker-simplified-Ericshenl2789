@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 
 public class Player{
+
     private ArrayList<Card> hand;
     private ArrayList<Card> allCards; //the current community cards + hand
     String[] suits  = Utility.getSuits();
@@ -30,16 +31,27 @@ public class Player{
         return false;
     }
 
-    public String playHand(ArrayList<Card> communityCards){     
-        for(Card card: communityCards){
-            allCards.add(card);
+    public String playHand(ArrayList<Card> communityCards){
+        if(!containsCommunity(communityCards)){        
+            for(Card card: communityCards){
+                allCards.add(card);
+            }
         }
         sortAllCards();
         if(royalFlush()){
             return "Royal Flush";
-        } 
-        if(threeOfAKind() != 0){
-            return "Three Of A Kind";
+        } else if(flush()){
+            return "Straight Flush";
+        } else if(quad()){
+            return "Four of a Kind";
+        } else if(fullHouse()){
+            return "Full House";
+        } else if (sameSuit()){
+            return "Flush";
+        } else if(consecutive()){
+            return "Straight";
+        } else if(threeOfAKind() != 0){
+            return "Three of a Kind";
         } else if(pairs() == 2){
             return "Two Pair";
         } else if(pairs() == 1){
@@ -110,13 +122,22 @@ public class Player{
         }
         return result;
     }
+    public Card highCardInHand(){
+        Card result = new Card("2", "");
+        for(Card card : hand){
+            if(Utility.getRankValue(card.getRank()) > Utility.getRankValue(result.getRank())){
+                result = card;
+            }
+        }
+        return result;
+    }
 
     public int pairs(){
         int numberOfPairs = 0;
-        for(int i = 1; i<allCards.size(); i++){
-            if(allCards.get(i).getRank().equals(allCards.get(i-1).getRank())){
+        ArrayList<Integer> rank = findRankingFrequency();
+        for(int i = 0; i < rank.size(); i++){
+            if(findRankingFrequency().get(i) == 2){
                 numberOfPairs++;
-                i++;
             }
         }
         return numberOfPairs;
@@ -181,5 +202,18 @@ public class Player{
     
     public boolean royalFlush(){
         return flush() && highCard().getRank().equals("A") ? true : false;
+    }
+
+    public boolean containsCommunity(ArrayList<Card> community){
+        int count = 0;
+        for(int i = 0; i<allCards.size();i++){
+            for(int j = 0; j < community.size(); j++){
+                if(allCards.get(i).equals(community.get(j))){
+                    count++;
+                    break;
+                }
+            }
+        }
+        return count == 3 ? true : false;
     }
 }
