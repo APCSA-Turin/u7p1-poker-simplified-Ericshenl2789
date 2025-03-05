@@ -18,11 +18,13 @@ public class Player{
     public ArrayList<Card> getAllCards(){return allCards;}
 
     public void addCard(Card c){
+        //adds the card to the hand and allCards
         hand.add(c);
         allCards.add(c);
     }
 
     public boolean inHand(Card card){
+        //checks if card is in hand by using a for loop. 
         for(Card card2 : hand){
             if(card.equals(card2)){
                 return true;
@@ -32,12 +34,15 @@ public class Player{
     }
 
     public String playHand(ArrayList<Card> communityCards){
+        //checks if the community card is already in allCards. If not add it. 
         if(!containsCommunity(communityCards)){        
             for(Card card: communityCards){
                 allCards.add(card);
             }
         }
+        //sorting cards for less work
         sortAllCards();
+        //if statement that checks and returns the result. 
         if(royalFlush()){
             return "Royal Flush";
         } else if(flush()){
@@ -59,10 +64,12 @@ public class Player{
         } else if(inHand(highCard())){
             return "High Card";
         }
+        //if the high card is not in hand.
         return "Nothing";
     }
 
     public void sortAllCards(){
+        //using insertion sort
         for(int i = 1; i < allCards.size(); i ++){
             Card card = allCards.get(i);
             int index = i;
@@ -76,9 +83,11 @@ public class Player{
 
     public ArrayList<Integer> findRankingFrequency(){
         ArrayList<Integer> result = new ArrayList<>();
+        //initalizing the arraylist
         for(int i = 0; i < 14; i++){
             result.add(0);
         }
+        //increase the index of the card Rank by one for each card. 
         for(int i = 0; i<allCards.size();i++){
             Card card = allCards.get(i);
             int index = Utility.getRankValue(card.getRank()) - 1;
@@ -89,9 +98,11 @@ public class Player{
 
     public ArrayList<Integer> findSuitFrequency(){
         ArrayList<Integer> result = new ArrayList<>();
+        //initalizing the list
         for(int i = 0 ; i <4; i++){
             result.add(0);
         }
+        //checking the suit and increasing the frequency in the list. 
         for(Card card : allCards){
             String suite = card.getSuit();
             if(suite.equals("♠")){
@@ -114,7 +125,9 @@ public class Player{
     }
 
     public Card highCard(){
+        //a low card(doesn't actually exist)
         Card result = new Card("2", "");
+        //loop through allCard. If the card is bigger than the result, replace it. 
         for(Card card : allCards){
             if(Utility.getRankValue(card.getRank()) > Utility.getRankValue(result.getRank())){
                 result = card;
@@ -123,7 +136,9 @@ public class Player{
         return result;
     }
     public Card highCardInHand(){
+        //placeholder card
         Card result = new Card("2", "");
+        //loop thorugh hand and find the highest card by replacing if the card is higher than result. 
         for(Card card : hand){
             if(Utility.getRankValue(card.getRank()) > Utility.getRankValue(result.getRank())){
                 result = card;
@@ -133,8 +148,11 @@ public class Player{
     }
 
     public int pairs(){
+        //the number of Pairs
         int numberOfPairs = 0;
+        //using rank frequency to count the number of pairs.
         ArrayList<Integer> rank = findRankingFrequency();
+        //check each rank, and see if the frequency is 2. If true, the count increases. 
         for(int i = 0; i < rank.size(); i++){
             if(findRankingFrequency().get(i) == 2){
                 numberOfPairs++;
@@ -144,6 +162,7 @@ public class Player{
     }
 
     public int threeOfAKind(){
+        
         int result = 0;
         int counter = 1;
         for(int i = 0; i < allCards.size() - 1; i++){
