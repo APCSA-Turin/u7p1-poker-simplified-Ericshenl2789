@@ -70,7 +70,9 @@ public class Game{
             if(userInput.equals("n")){
                 break;
             }
+            System.out.println("----------------------------------");
         }
+        scan.close();
     }
 
 }
