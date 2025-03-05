@@ -68,7 +68,6 @@ public class Player{
         return "Nothing";
     }
 
-<<<<<<< HEAD
     public void sortAllCards(){
         //using insertion sort
         for(int i = 1; i < allCards.size(); i ++){
@@ -81,9 +80,6 @@ public class Player{
             allCards.set(index, card);
         }
     } 
-=======
-    public void sortAllCards(){} 
->>>>>>> upstream/main
 
     public ArrayList<Integer> findRankingFrequency(){
         ArrayList<Integer> result = new ArrayList<>();
