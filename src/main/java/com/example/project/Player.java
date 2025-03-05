@@ -162,15 +162,19 @@ public class Player{
     }
 
     public int threeOfAKind(){
-        
+        //the rank of the three of a kind
         int result = 0;
+        //keeping track of how many of the same
         int counter = 1;
+        //looping through all cards
         for(int i = 0; i < allCards.size() - 1; i++){
+            //if the next card has the same rank, count ++
             if(allCards.get(i).getRank().equals(allCards.get(i+1).getRank())){
                 counter++;
-            }else{
+            }else{//reset
                 counter = 1;
             }
+            //when there's 3 of same rank, return it
             if(counter == 3){
                 result = Utility.getRankValue(allCards.get(i).getRank());
             }
@@ -179,6 +183,7 @@ public class Player{
     }
     
     public boolean consecutive(){
+        //checks if the rank of the next number is the rank of this number + 1. 
         for(int i = 0; i<allCards.size() - 1; i++){
             if(Utility.getRankValue(allCards.get(i).getRank()) + 1 != Utility.getRankValue(allCards.get(i+1).getRank())){
                 return false; 
@@ -187,6 +192,7 @@ public class Player{
         return true;
     }
     public boolean sameSuit(){
+        //checks if they all have the same suit based on the first card's suit
         String suit = allCards.get(0).getSuit();
         for(int i = 1; i < allCards.size(); i++){
             if(!allCards.get(i).getSuit().equals(suit)){
@@ -197,10 +203,12 @@ public class Player{
     }
 
     public boolean fullHouse(){
+        //checking if there is a three of a kind and one pair
         return threeOfAKind() != 0 && pairs() == 1 ? true : false;
     }
 
     public boolean quad(){
+        //similar to three of a kind but only returns when counter reaches 4.
         int counter = 1;
         for(int i = 0; i < allCards.size() - 1; i++){
             if(allCards.get(i).getRank().equals(allCards.get(i+1).getRank())){
@@ -216,23 +224,29 @@ public class Player{
     }
 
     public boolean flush(){
+        //if its both consecutive and has the same suit
         return consecutive() && sameSuit() ? true : false;
     }
     
     public boolean royalFlush(){
+        //flush and check the highest card. If it is "A", then it is a royal flush
         return flush() && highCard().getRank().equals("A") ? true : false;
     }
 
     public boolean containsCommunity(ArrayList<Card> community){
+        //counter for the number of cards that are same as community cards in allCards
         int count = 0;
+        //looping through each card and checking if it is equal to one of the community cards. If yes then count++
         for(int i = 0; i<allCards.size();i++){
             for(int j = 0; j < community.size(); j++){
                 if(allCards.get(i).equals(community.get(j))){
                     count++;
+                    //when found, skip to the next card in allCards
                     break;
                 }
             }
         }
+        //if there's three same cards, then allCards has community cards already
         return count == 3 ? true : false;
     }
 }

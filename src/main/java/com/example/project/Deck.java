@@ -17,6 +17,7 @@ public class Deck{
 
     public  void initializeDeck(){ //hint.. use the utility class
         cards = new ArrayList<>();
+        //creating a card for each rank and each suit using a nested for loop. 
         for(int i = 0; i < Utility.getRanks().length; i++){
             for(int j = 0; j < Utility.getSuits().length; j++){
                 cards.add(new Card(Utility.getRanks()[i], Utility.getSuits()[j]));
@@ -29,6 +30,7 @@ public class Deck{
     }
 
     public Card drawCard(){
+        //if the first card is null, return null. If it isn't remove the card and return it.
        return cards.get(0) == null ? null : cards.remove(0);
     }
 
