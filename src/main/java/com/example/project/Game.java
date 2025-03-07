@@ -9,14 +9,18 @@ public class Game{
         int player2 = Utility.getHandRanking(p2Hand);
         //if there's no tie then check to see who's hand rank is bigger. Bigger == winner
         if(player1 > player2 || player1 < player2){
-            return player1 > player2 ? "Player 1 wins!" : "Player 2 wins!";
+            if(player1 > player2){
+                return "Player 1 wins!";
+            } else{return "Player 2 wins!";}
         } else {
             //if there is tie, get their highest card in hand and compare them.
             player1 = Utility.getRankValue(p1.highCardInHand().getRank());
             player2 = Utility.getRankValue(p2.highCardInHand().getRank());
             //if its different, Bigger == winner
             if(player1 > player2 || player1 < player2){
-                return player1 > player2 ? "Player 1 wins!" : "Player 2 wins!";
+                if(player1 > player2){
+                    return "Player 1 wins!";
+                } else{return "Player 2 wins!";}
             } else {return "Tie!";}//else return tie.
         }
     }

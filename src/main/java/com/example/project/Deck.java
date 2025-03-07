@@ -31,7 +31,11 @@ public class Deck{
 
     public Card drawCard(){
         //if the first card is null, return null. If it isn't remove the card and return it.
-       return cards.get(0) == null ? null : cards.remove(0);
+        if(cards.get(0) == null){
+            return null;
+        } else {
+            return cards.remove(0);
+        }
     }
 
     public boolean isEmpty(){

@@ -204,7 +204,7 @@ public class Player{
 
     public boolean fullHouse(){
         //checking if there is a three of a kind and one pair
-        return threeOfAKind() != 0 && pairs() == 1 ? true : false;
+        return threeOfAKind() != 0 && pairs() == 1;
     }
 
     public boolean quad(){
@@ -225,12 +225,12 @@ public class Player{
 
     public boolean flush(){
         //if its both consecutive and has the same suit
-        return consecutive() && sameSuit() ? true : false;
+        return consecutive() && sameSuit();
     }
     
     public boolean royalFlush(){
         //flush and check the highest card. If it is "A", then it is a royal flush
-        return flush() && highCard().getRank().equals("A") ? true : false;
+        return flush() && highCard().getRank().equals("A");
     }
 
     public boolean containsCommunity(ArrayList<Card> community){
@@ -247,6 +247,6 @@ public class Player{
             }
         }
         //if there's three same cards, then allCards has community cards already
-        return count == 3 ? true : false;
+        return count == 3;
     }
 }
